@@ -1,0 +1,195 @@
+@media screen and (max-width: 500px){
+$main-font: 'Montserrat', sans-serif;
+$logo-color: rgb(255, 217, 0);
+
+.front{
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, .6);
+    &__logo{
+        display: flex;
+        align-items: center;
+       
+    }
+    &__name{
+        color: white;
+        font-size: 2.5em;
+        width: 100%;
+        user-select: none;
+    }
+    & svg{
+        fill: $logo-color;
+        margin-right: .5rem;
+    }
+    &__enter__button{
+        margin-top: 2rem;
+        background-color: $logo-color;
+        padding: .5rem 1rem .5rem 1rem;
+        border: none;
+        border-radius: 2rem;
+        bottom: 8rem;
+        right: 3rem;
+        font-weight: 700;
+        font-size: 1.5em;
+        color: white;
+        & svg{
+            fill: white;
+            transition: transform 300ms cubic-bezier(0.55, 0.085, 0.68, 0.53);
+        }
+    }
+    &__enter__button:hover{
+        background-color: transparent;
+        color: $logo-color;
+        border: 1px white solid;
+        & svg{
+            transform: translateX(50%);
+        }
+    }
+}
+.foot{
+    position: absolute;
+    // text-align: center;
+    color: white;
+    bottom: .5rem;
+    margin-left: .5rem;
+}
+.dashbord{    
+    background-color: rgb(1, 3, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    // justify-content: center;
+    width: 100%;
+    min-height: 100vh;
+    &__title{
+        color: white;
+    }
+    &__search{
+        margin-top: 1rem;
+        & input{
+            width: 20rem;
+            height: 3rem;
+            background-color: rgba(255, 217, 0, .4);
+            border: none; 
+            border-radius: 1rem;
+            padding-left: .7rem;
+            font-size: 1.7em;
+            color: white;
+            outline: none;
+        }
+        & input::placeholder{
+            opacity: .5;
+        }
+        
+    }
+    &__date{
+        margin-top: 1rem;
+        color: white;
+        opacity: 1;
+
+    }
+    & svg{
+        position: fixed;
+        top: 20rem;
+        fill: $logo-color;
+        cursor: pointer;
+    }
+    & svg:hover{
+        opacity: .8;
+    }
+    &__notes{
+        &__state{
+            margin-top: 3rem;
+
+        }
+    }
+    
+}
+.textEditor{
+    min-height: 100vh;
+    width: 100%;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-top: 1rem;
+    padding-left: .5rem;
+    & textarea{
+        max-width: 90%;
+        overflow: scroll;
+        padding: .5rem .5rem .5rem .5rem;
+        border: 1px solid rgba(0, 0, 0, 0.246);
+        outline-color: $logo-color;
+        resize: none;
+    }
+    & textarea::placeholder{
+        opacity: .4;
+       
+    }
+    &__title{
+        display: flex;
+        align-items: flex-start;
+        & h3{
+            margin-right: 1rem;
+            opacity: .8;
+        }
+        & input{
+            width: 15rem;
+            border: none;
+            border-bottom: .5px solid rgba(0, 0, 0, 0.424);
+            outline: none;
+        }
+ 
+    }
+    &__tools{
+        margin-bottom: 1rem;
+        display: flex;
+        & button{
+            background-color: transparent;
+            border: none;
+            margin-right: 2rem;
+
+        }
+        &__color__one, &__color__two, &__color__three{
+            border-radius: 50%;
+            height: 1.7rem;
+            width: 1.7rem;
+            margin-left: 2rem;
+            cursor: pointer;
+        }
+       
+        &__color__one{
+            background-color: #ee5253;
+        }
+        &__color__two{
+            background-color: #5f27cd;
+        }
+        &__color__three{
+            background-color: #ff9f43;
+        }  
+    }
+    &__save{
+        margin-left: 10rem;
+        padding: .5rem 2.5rem .5rem 2.5rem;
+        background-color: $logo-color;
+        color: white;
+        border: none;
+        font-size: 1rem;
+        display: inline-block;
+        border-radius: 2rem;
+        font-weight: 700;
+        position: absolute;
+        right: 14.5rem;
+        top: 118rem;
+    }
+    &__save:hover{
+        background-color: transparent;
+        color: black;
+        border: .5px solid $logo-color;
+    }   
+  }
+}

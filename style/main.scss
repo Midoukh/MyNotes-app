@@ -1,0 +1,42 @@
+@import 'desktop';
+@import 'phone';
+// vars
+$main-font: 'Montserrat', sans-serif;
+$logo-color: rgb(255, 217, 0);
+*{
+    box-sizing: inherit;
+}
+html{
+    padding: 0;
+    margin: 0;
+    font-family: $main-font;
+}
+body{
+    background-image: url('../assets/back.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 100vh;
+    max-width: 100%;
+    overflow: hidden;
+
+}
+.--inactive{
+    display: none;
+}
+.--slideLeft{
+    transform: translateX(-100%);
+}
+.--active{
+    animation-name: myAnimation;
+    animation-duration: 500ms;
+    animation-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1);
+    animation-iteration-count: 1;
+}
+@keyframes myAnimation{
+    0%{transform: translateY(0);}
+    100%{transform: translateY(-100%);}
+ 
+}
+.--inableTool{
+    box-shadow: 2px 2px 2px black;
+}

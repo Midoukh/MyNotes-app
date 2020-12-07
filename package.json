@@ -1,0 +1,14 @@
+{
+  "name": "note-app",
+  "version": "1.0.0",
+  "description": "Cool note app",
+  "main": "app.js",
+  "scripts": {
+    "start": "browser-sync start --server --files \"*.css, *.html, *.js\""
+  },
+  "author": "Ahmed Khelili",
+  "license": "ISC",
+  "dependencies": {
+    "browser-sync": "^2.26.13"
+  }
+}
