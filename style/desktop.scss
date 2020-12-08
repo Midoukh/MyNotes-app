@@ -91,13 +91,13 @@ $logo-color: rgb(255, 217, 0);
         color: white;
         opacity: 1;
     }
-    & svg{
+    & .bi-plus-circle-fill{
         position: fixed;
         top: 20rem;
         fill: $logo-color;
         cursor: pointer;
     }
-    & svg:hover{
+    & .bi-plus-circle-fill:hover{
         opacity: .8;
     }
     &__notes{
@@ -109,19 +109,42 @@ $logo-color: rgb(255, 217, 0);
         border-top: .5px solid rgba(255, 255, 255, 0.335);
         width: inherit;
         margin-top: 1rem;
+        opacity: 1;
         &__note{
+            opacity: 1;
             width: 100%;
             margin-top: 1rem;
             display: flex;
-            justify-content: center;
-            display: inline;
-            background-color: coral;
-            & svg{
-                display: inline-block;
+            align-items: center;
+            cursor: pointer;
+            & .bi-trash-fill{
+                fill: #ee5253;
+                margin-left: 5rem;
+                transition: 0.5s all ease-in-out;
+            }
+            & .bi-pencil-fill{
+                fill: #5f27cd;
+                height: 1.4rem;
+                margin-left: 1rem;
+                transition: 0.5s all ease-in-out;
+
+            }
+            & .bi-pencil-fill:hover, & .bi-trash-fill:hover{
+                fill: white;
+            }
+            &__titles{
+                &__name{
+                    color: white;
+                }
+                &__date{
+                    color: rgba(255, 255, 255, 0.794);
+
+                }
+                
             }
         }
     }
-    transition: 1s transform cubic-bezier(0.6, -0.28, 0.735, 0.045);
+    transition: 1s transform ease-in-out;
 }
 .textEditor{
     min-height: 100vh;
@@ -207,6 +230,69 @@ $logo-color: rgb(255, 217, 0);
         background-color: transparent;
         color: black;
         border: .5px solid $logo-color;
+    }
+    &__loader{
+            visibility: hidden;
+            display: inline-block;
+            position: relative;
+            bottom: 32.5rem;
+            left: 53.5rem;
+            width: 80px;
+            height: 80px;
+            position: absolute;
+          & div {
+            position: absolute;
+            border: 4px solid coral;
+            opacity: 1;
+            border-radius: 50%;
+            animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+          }
+          & div:nth-child(2) {
+            animation-delay: -0.5s;
+          }
+          @keyframes lds-ripple {
+            0% {
+              top: 36px;
+              left: 36px;
+              width: 0;
+              height: 0;
+              opacity: 1;
+            }
+            100% {
+              top: 0px;
+              left: 0px;
+              width: 72px;
+              height: 72px;
+              opacity: 0;
+            }
+          }
+    }
+    &__error{
+        visibility: hidden;
+        color: white;
+        background-color: #ff3333;
+        max-width: 100%;
+        height: 3rem;
+        padding: 2px 3px 2px 3px;
+        border-radius: 8px;
+        position: relative;
+        bottom: 25rem;
+        left: 25rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+        & strong{
+            margin-left: 2rem;
+            color: black;
+            cursor: pointer;
+        }
+        & strong:hover{
+            color: rgba(0, 0, 0, 0.356);
+        }
     }   
+    transition: 1s transform ease-in-out;
   }
+  
 }

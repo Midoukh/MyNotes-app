@@ -26,6 +26,9 @@ body{
 .--slideLeft{
     transform: translateX(-100%);
 }
+.--slideRigth{
+    transform: translateX(100%);
+}
 .--active{
     animation-name: myAnimation;
     animation-duration: 500ms;
@@ -39,4 +42,18 @@ body{
 }
 .--inableTool{
     box-shadow: 2px 2px 2px black;
+}
+.--showLoder{
+    visibility: visible;
+}
+.--showError{
+    animation: error;
+    animation-duration: 1s;
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    animation-fill-mode: both;
+}
+@keyframes error{
+    0%{opacity: 0; visibility: hidden;}
+    100%{opacity: 1; visibility: visible;}
+
 }

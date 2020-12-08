@@ -73,7 +73,7 @@
         <section class="textEditor">
             <div class="textEditor__title">
                 <h3>Title</h3>
-                <input type="text" id="title" placeholder="Add a title...">
+                <input type="text" id="title" placeholder="Add a title..." maxlength="35">
             </div>
             <div class="textEditor__tools">
                 <button class="textEditor__tools__bold"><i class="fas fa-bold" data-name ="bold"></i></button>
@@ -88,6 +88,8 @@
             <button class="textEditor__save">Save</button>
 
             <div id="textarea" class="textEditor__textarea" data-text="What's on your mind?" contenteditable="true"></div>
+            <div class="textEditor__loader"><div></div><div></div></div>
+            <div class="textEditor__error">Please add some content <strong>&#x2613;</strong></div>
         </section>
 
 

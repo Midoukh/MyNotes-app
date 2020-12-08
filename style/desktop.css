@@ -87,10 +87,10 @@
             align-items: center;
     width: 100%;
     min-height: 100vh;
-    -webkit-transition: 1s -webkit-transform cubic-bezier(0.6, -0.28, 0.735, 0.045);
-    transition: 1s -webkit-transform cubic-bezier(0.6, -0.28, 0.735, 0.045);
-    transition: 1s transform cubic-bezier(0.6, -0.28, 0.735, 0.045);
-    transition: 1s transform cubic-bezier(0.6, -0.28, 0.735, 0.045), 1s -webkit-transform cubic-bezier(0.6, -0.28, 0.735, 0.045);
+    -webkit-transition: 1s -webkit-transform ease-in-out;
+    transition: 1s -webkit-transform ease-in-out;
+    transition: 1s transform ease-in-out;
+    transition: 1s transform ease-in-out, 1s -webkit-transform ease-in-out;
   }
   .dashbord__title {
     color: white;
@@ -126,13 +126,13 @@
     color: white;
     opacity: 1;
   }
-  .dashbord svg {
+  .dashbord .bi-plus-circle-fill {
     position: fixed;
     top: 20rem;
     fill: #ffd900;
     cursor: pointer;
   }
-  .dashbord svg:hover {
+  .dashbord .bi-plus-circle-fill:hover {
     opacity: .8;
   }
   .dashbord__notes__state {
@@ -142,21 +142,41 @@
     border-top: 0.5px solid rgba(255, 255, 255, 0.335);
     width: inherit;
     margin-top: 1rem;
+    opacity: 1;
   }
   .dashbord__notes__note {
+    opacity: 1;
     width: 100%;
     margin-top: 1rem;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
-    display: inline;
-    background-color: coral;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    cursor: pointer;
   }
-  .dashbord__notes__note svg {
-    display: inline-block;
+  .dashbord__notes__note .bi-trash-fill {
+    fill: #ee5253;
+    margin-left: 5rem;
+    -webkit-transition: 0.5s all ease-in-out;
+    transition: 0.5s all ease-in-out;
+  }
+  .dashbord__notes__note .bi-pencil-fill {
+    fill: #5f27cd;
+    height: 1.4rem;
+    margin-left: 1rem;
+    -webkit-transition: 0.5s all ease-in-out;
+    transition: 0.5s all ease-in-out;
+  }
+  .dashbord__notes__note .bi-pencil-fill:hover, .dashbord__notes__note .bi-trash-fill:hover {
+    fill: white;
+  }
+  .dashbord__notes__note__titles__name {
+    color: white;
+  }
+  .dashbord__notes__note__titles__date {
+    color: rgba(255, 255, 255, 0.794);
   }
   .textEditor {
     min-height: 100vh;
@@ -174,6 +194,10 @@
             align-items: flex-start;
     padding-top: 1rem;
     padding-left: 3rem;
+    -webkit-transition: 1s -webkit-transform ease-in-out;
+    transition: 1s -webkit-transform ease-in-out;
+    transition: 1s transform ease-in-out;
+    transition: 1s transform ease-in-out, 1s -webkit-transform ease-in-out;
   }
   .textEditor__textarea {
     overflow: scroll;
@@ -261,6 +285,90 @@
     background-color: transparent;
     color: black;
     border: 0.5px solid #ffd900;
+  }
+  .textEditor__loader {
+    visibility: hidden;
+    display: inline-block;
+    position: relative;
+    bottom: 32.5rem;
+    left: 53.5rem;
+    width: 80px;
+    height: 80px;
+    position: absolute;
+  }
+  .textEditor__loader div {
+    position: absolute;
+    border: 4px solid coral;
+    opacity: 1;
+    border-radius: 50%;
+    -webkit-animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+            animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+  }
+  .textEditor__loader div:nth-child(2) {
+    -webkit-animation-delay: -0.5s;
+            animation-delay: -0.5s;
+  }
+  @-webkit-keyframes lds-ripple {
+    0% {
+      top: 36px;
+      left: 36px;
+      width: 0;
+      height: 0;
+      opacity: 1;
+    }
+    100% {
+      top: 0px;
+      left: 0px;
+      width: 72px;
+      height: 72px;
+      opacity: 0;
+    }
+  }
+  @keyframes lds-ripple {
+    0% {
+      top: 36px;
+      left: 36px;
+      width: 0;
+      height: 0;
+      opacity: 1;
+    }
+    100% {
+      top: 0px;
+      left: 0px;
+      width: 72px;
+      height: 72px;
+      opacity: 0;
+    }
+  }
+  .textEditor__error {
+    visibility: hidden;
+    color: white;
+    background-color: #ff3333;
+    max-width: 100%;
+    height: 3rem;
+    padding: 2px 3px 2px 3px;
+    border-radius: 8px;
+    position: relative;
+    bottom: 25rem;
+    left: 25rem;
+    font-weight: 700;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+  .textEditor__error strong {
+    margin-left: 2rem;
+    color: black;
+    cursor: pointer;
+  }
+  .textEditor__error strong:hover {
+    color: rgba(0, 0, 0, 0.356);
   }
 }
 /*# sourceMappingURL=desktop.css.map */

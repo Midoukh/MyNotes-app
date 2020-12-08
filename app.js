@@ -9,11 +9,25 @@ const items = {
     textarea: document.querySelector('#textarea'),
     blue: document.querySelector('[data-name=""]'),
     notesList: document.querySelector('.dashbord__notes'),
-    noteListState: document.querySelector('.dashbord__notes h1')
+    noteListState: document.querySelector('.dashbord__notes h1'),
+    noteTitle: document.querySelector('#title'),
+    saveNoteBtn: document.querySelector('.textEditor__save'),
+    loader: document.querySelector('.textEditor__loader'),
+    errorSnackBar: document.querySelector('.textEditor__error')
 }
 
 //vars
 const notes = []
+
+//storing the individual note
+class Note {
+    constructor(title, content, date){
+        this.content = content;
+        this.title = title;
+        this.date = date;
+    }
+}
+const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mai', 'Juin', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
 //functions
 
@@ -26,7 +40,10 @@ function tempShow(tab){
 }
 
 function slideToLeft(tab){
-    tab.classList.add('--slideLeft')
+    tab.classList.toggle('--slideLeft')
+}
+function slideToRight(tab){
+    tab.classList.add('--slideRigth')
 }
 function hideFront(front){
     front.classList.add('--inactive')
@@ -48,13 +65,22 @@ function choseColor(){
 
 
 //create notes
-function createNote(title){
+
+function createNote(){
+    const now = new Date()
+    const date = months[now.getMonth()] + '/' + now.getFullYear()
+    const newNote = new Note(items.noteTitle.value, items.textarea.innerHTML, date)
+    renderNote(newNote.title, date, newNote.content)
+    console.log(newNote)
+}
+
+function renderNote(title = 'First Note', date = 'Dec 2020', content){
     //set markup
     const markup = `
 <li class="dashbord__notes__note">
   <div class="dashbord__notes__note__titles">
-        <h2 class="dashbord__notes__note__titles__name">First Note</h2>
-        <h4 class="dashbord__notes__note__titles__date">Dec 2020</h4>
+        <h2 class="dashbord__notes__note__titles__name">${title}</h2>
+        <h4 class="dashbord__notes__note__titles__date">${date}</h4>
   </div>
 <img class="dashbord__notes__note__image">
 
@@ -84,7 +110,15 @@ function createNote(title){
     }
 
 }
-createNote()
+function hideLoader(loader){
+   loader.classList.remove('--showLoder')
+
+}
+
+function restoreTextEditor(){
+    items.textarea.textContent = ''
+    items.noteTitle.value = ''
+}
 //Event Listeners
 //When load
 window.addEventListener('load', () => {
@@ -101,11 +135,21 @@ items.enterBtn.addEventListener('click', () => {
 })
 //adding a new note
 items.addNoteBtn.addEventListener('click', (e) => {
+    restoreTextEditor()
+
     slideToLeft(items.dashboard)
     setTimeout(() => {
         hideFront(items.dashboard)
         tempShow(items.textEditor)
+        //when activate textEditor hide the dashboard
+        if (items.textEditor.classList.contains('--active')){
+            hideFront(items.dashboard)
+            items.dashboard.classList.remove('--active')
+            items.textEditor.classList.remove('--slideRigth')
+        }
+        showDashboard(items.textEditor)
     }, 1100)
+    
 })
 //user feedback when clicking to use a certain tool
 items.textEditorTools.forEach(tool => {
@@ -132,5 +176,24 @@ items.textEditorTools.forEach(tool => {
         }
     })
     
+})
+items.saveNoteBtn.addEventListener('click', () => {
+    if (items.noteTitle.value && items.textarea.textContent){
+        //create and save a new note
+    createNote()
+
+    //hide text editor and show dashboard
+   setTimeout(slideToRight, 1000, items.textEditor)
+    items.loader.classList.add('--showLoder')
+    setTimeout(() =>{
+        hideFront(items.textEditor)
+        tempShow(items.dashboard)
+        slideToLeft(items.dashboard)
+        hideLoader(items.loader)
+    }, 1100)
+    }
+    else{
+        items.errorSnackBar.classList.toggle('--showError')
+    }
 })
 
