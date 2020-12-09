@@ -146,7 +146,7 @@
   }
   .dashbord__notes__note {
     opacity: 1;
-    width: 100%;
+    width: 80%;
     margin-top: 1rem;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -154,20 +154,29 @@
     -webkit-box-align: center;
         -ms-flex-align: center;
             align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     cursor: pointer;
   }
   .dashbord__notes__note .bi-trash-fill {
     fill: #ee5253;
     margin-left: 5rem;
-    -webkit-transition: 0.5s all ease-in-out;
-    transition: 0.5s all ease-in-out;
+    visibility: hidden;
+    -webkit-transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
   }
-  .dashbord__notes__note .bi-pencil-fill {
+  .dashbord__notes__note .bi-pencil-fill, .dashbord__notes__note .fa-eye {
     fill: #5f27cd;
     height: 1.4rem;
     margin-left: 1rem;
-    -webkit-transition: 0.5s all ease-in-out;
-    transition: 0.5s all ease-in-out;
+    visibility: hidden;
+    -webkit-transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  .dashbord__notes__note .fa-eye {
+    color: #ff9f43;
+  }
+  .dashbord__notes__note .fa-eye:hover {
+    color: white;
   }
   .dashbord__notes__note .bi-pencil-fill:hover, .dashbord__notes__note .bi-trash-fill:hover {
     fill: white;
@@ -177,6 +186,71 @@
   }
   .dashbord__notes__note__titles__date {
     color: rgba(255, 255, 255, 0.794);
+  }
+  .dashbord__notes__note .content {
+    display: none;
+  }
+  .dashbord__notes__note:hover .bi-trash-fill, .dashbord__notes__note:hover .bi-pencil-fill, .dashbord__notes__note:hover .fa-eye {
+    margin-left: 1.5rem;
+    visibility: visible;
+  }
+  .dashbord__view {
+    margin: 0;
+    position: absolute;
+    width: inherit;
+    min-height: inherit;
+    background-color: rgba(255, 255, 255, 0.438);
+    z-index: 200;
+    -webkit-backdrop-filter: blur(4px);
+            backdrop-filter: blur(4px);
+    display: none;
+    -webkit-transition: all 2s cubic-bezier(0.95, 0.05, 0.795, 0.035);
+    transition: all 2s cubic-bezier(0.95, 0.05, 0.795, 0.035);
+  }
+  .dashbord__view__infos {
+    max-width: inherit;
+    max-height: 70%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .dashbord__view__infos .heads, .dashbord__view__infos p {
+    padding: 1rem 2rem 1rem 1rem;
+  }
+  .dashbord__view__infos .heads {
+    background-color: rgba(255, 255, 255, 0.404);
+  }
+  .dashbord__view__infos .heads .date {
+    color: white;
+    opacity: .6;
+  }
+  .dashbord__view__infos p {
+    max-width: 100%;
+    margin-top: 1rem;
+    background-color: rgba(255, 255, 255, 0.2);
+    word-break: break-all;
+    overflow-y: scroll;
+    line-height: 2em;
+    font-weight: 700;
+  }
+  .dashbord__view__infos .close {
+    position: absolute;
+    border: none;
+    padding: 1rem 1.5rem;
+    background-color: white;
+    color: rgba(0, 0, 0, 0.698);
+    right: 2rem;
+    top: 2rem;
+    border-radius: 2rem;
+    font-weight: 500;
+  }
+  .dashbord__view__infos .close:hover {
+    background-color: rgba(0, 0, 0, 0.698);
+    color: white;
   }
   .textEditor {
     min-height: 100vh;

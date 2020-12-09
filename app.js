@@ -13,7 +13,12 @@ const items = {
     noteTitle: document.querySelector('#title'),
     saveNoteBtn: document.querySelector('.textEditor__save'),
     loader: document.querySelector('.textEditor__loader'),
-    errorSnackBar: document.querySelector('.textEditor__error')
+    errorSnackBar: document.querySelector('.textEditor__error'),
+    viewNote: document.querySelector('.dashbord__view'),
+    viewtitle: document.querySelector('.heads h2'),
+    viewDate: document.querySelector('.heads h4'),
+    viewContent: document.querySelector('.dashbord__view p'), 
+    closeNoteBtn: document.querySelector('.dashbord__view button')
 }
 
 //vars
@@ -84,9 +89,6 @@ function renderNote(title = 'First Note', date = 'Dec 2020', content){
   </div>
 <img class="dashbord__notes__note__image">
 
-<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-    <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
-  </svg>
 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
     <path fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/>
   </svg>
@@ -94,6 +96,10 @@ function renderNote(title = 'First Note', date = 'Dec 2020', content){
   <svg width="2.5em" height="2.5em" viewBox="0 0 16 16" class="bi bi-pencil-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
     <path fill-rule="evenodd" d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
   </svg>
+
+  <i class="fas fa-eye"></i>
+  <p class="content">${content}</p>
+
 
 </li> 
     
@@ -119,10 +125,50 @@ function restoreTextEditor(){
     items.textarea.textContent = ''
     items.noteTitle.value = ''
 }
+
+//view the content of the note
+function viewNote(e){
+    let title = '', content = '', date = null
+    const note = Array.from(e.target.parentElement.children)
+    note.forEach(el => {
+        if (el.classList.contains('dashbord__notes__note__titles')){
+            Array.from(el.children).forEach(t => {
+                if (t.classList.contains('dashbord__notes__note__titles__name')){
+                    title = t.textContent;
+                }
+                else if (t.classList.contains('dashbord__notes__note__titles__date')){
+                    date = t.textContent;
+                }
+            })
+        }
+        else if (el.classList.contains('content')){
+            content = el.textContent;
+        }
+
+    })
+    if (Array.from(items.notesList.children).length >= 1){
+        //show note
+        if (e.target.classList.contains('fa-eye')){
+            items.viewNote.classList.add('--showNoteContent')
+        }
+    }
+    renderNoteCard(title, date, content)
+}
+
+function renderNoteCard(title, date, content){
+    items.viewtitle.textContent = title
+    items.viewDate.textContent = date
+    items.viewContent.textContent = content
+}
+
+function closeNote(e){
+    e.target.parentElement.parentElement.classList.remove('--showNoteContent')
+}
 //Event Listeners
 //When load
 window.addEventListener('load', () => {
     tempHideTabs(items.dashboard, items.textEditor)
+
 })
 //slide front page on click
 items.enterBtn.addEventListener('click', () => {
@@ -195,5 +241,13 @@ items.saveNoteBtn.addEventListener('click', () => {
     else{
         items.errorSnackBar.classList.toggle('--showError')
     }
+})
+
+//show note
+items.notesList.addEventListener('click', viewNote)
+
+//close note
+items.closeNoteBtn.addEventListener('click', (e) =>{
+    setTimeout(closeNote, 1500, e)
 })
 

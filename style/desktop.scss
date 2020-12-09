@@ -112,22 +112,31 @@ $logo-color: rgb(255, 217, 0);
         opacity: 1;
         &__note{
             opacity: 1;
-            width: 100%;
+            width: 80%;
             margin-top: 1rem;
             display: flex;
             align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
             cursor: pointer;
             & .bi-trash-fill{
                 fill: #ee5253;
                 margin-left: 5rem;
-                transition: 0.5s all ease-in-out;
+                visibility: hidden;
+                transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
             }
-            & .bi-pencil-fill{
+            & .bi-pencil-fill, & .fa-eye{
                 fill: #5f27cd;
                 height: 1.4rem;
                 margin-left: 1rem;
-                transition: 0.5s all ease-in-out;
+                visibility: hidden;
+                transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
 
+            }
+            & .fa-eye{
+                color: #ff9f43;
+            }
+            & .fa-eye:hover{
+                color: white;
             }
             & .bi-pencil-fill:hover, & .bi-trash-fill:hover{
                 fill: white;
@@ -142,7 +151,68 @@ $logo-color: rgb(255, 217, 0);
                 }
                 
             }
+            & .content{
+                display: none;
+            }
         }
+        &__note:hover{
+                & .bi-trash-fill, & .bi-pencil-fill, & .fa-eye{
+                    margin-left: 1.5rem;
+                    visibility: visible;
+                }
+        }
+    }
+    &__view{
+        margin: 0;
+        position: absolute;
+        width: inherit;
+        min-height: inherit;
+        background-color: rgba(255, 255, 255, 0.438);
+        z-index: 200;
+        backdrop-filter: blur(4px);
+
+        &__infos{
+            max-width: inherit;
+            max-height: 70%;
+            display: flex;
+            flex-direction: column;
+            & .heads, & p{
+                padding: 1rem 2rem 1rem 1rem;
+            }
+            & .heads{
+                background-color: rgba(255, 255, 255, 0.404);
+                & .date{
+                    color: white;
+                    opacity: .6;
+                }
+            }
+            & p{
+                max-width: 100%;
+                margin-top: 1rem;
+                background-color: rgba(255, 255, 255, .2);
+                word-break: break-all;
+                overflow-y: scroll;
+                line-height: 2em;
+                font-weight: 700;
+            }
+            & .close{
+                position: absolute;
+                border: none;
+                padding: 1rem 1.5rem;
+                background-color: white;
+                color: rgba(0, 0, 0, 0.698);
+                right: 2rem;
+                top: 2rem;
+                border-radius: 2rem;
+                font-weight: 500;
+            }
+            & .close:hover{
+                background-color:rgba(0, 0, 0, 0.698);
+                color: white;
+            }
+        }
+        display: none;
+        transition: all 2s cubic-bezier(0.95, 0.05, 0.795, 0.035);
     }
     transition: 1s transform ease-in-out;
 }
