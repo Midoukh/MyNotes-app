@@ -204,8 +204,8 @@
     -webkit-backdrop-filter: blur(4px);
             backdrop-filter: blur(4px);
     display: none;
-    -webkit-transition: all 2s cubic-bezier(0.95, 0.05, 0.795, 0.035);
-    transition: all 2s cubic-bezier(0.95, 0.05, 0.795, 0.035);
+    -webkit-transition: all 2s ease;
+    transition: all 2s ease;
   }
   .dashbord__view__infos {
     max-width: inherit;

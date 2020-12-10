@@ -212,7 +212,7 @@ $logo-color: rgb(255, 217, 0);
             }
         }
         display: none;
-        transition: all 2s cubic-bezier(0.95, 0.05, 0.795, 0.035);
+        transition: all 2s ease;
     }
     transition: 1s transform ease-in-out;
 }

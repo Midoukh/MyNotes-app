@@ -9,6 +9,7 @@
   "author": "Ahmed Khelili",
   "license": "ISC",
   "dependencies": {
-    "browser-sync": "^2.26.13"
+    "browser-sync": "^2.26.13",
+    "unique-names-generator": "^4.3.1"
   }
 }

@@ -26,12 +26,14 @@ const notes = []
 
 //storing the individual note
 class Note {
-    constructor(title, content, date){
+    constructor(title, content, date, id){
         this.content = content;
         this.title = title;
         this.date = date;
+        this.id = id;
     }
 }
+
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mai', 'Juin', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
 //functions
@@ -72,17 +74,22 @@ function choseColor(){
 //create notes
 
 function createNote(){
+    const rand = Math.floor(Math.random() * 5000);
+    let id = '';
+    id = rand
     const now = new Date()
-    const date = months[now.getMonth()] + '/' + now.getFullYear()
-    const newNote = new Note(items.noteTitle.value, items.textarea.innerHTML, date)
-    renderNote(newNote.title, date, newNote.content)
-    console.log(newNote)
+    const date = months[now.getMonth()] + '/' + now.getFullYear();
+    const newNote = new Note(items.noteTitle.value, items.textarea.innerHTML, date, id)
+
+    notes.push(newNote)
+    localStorage.setItem(`MyNote${rand}`, Object.values(newNote))
+    renderNote(newNote.title, date, newNote.content, id)
 }
 
-function renderNote(title = 'First Note', date = 'Dec 2020', content){
+function renderNote(title = 'First Note', date = 'Dec 2020', content, id){
     //set markup
     const markup = `
-<li class="dashbord__notes__note">
+<li class="dashbord__notes__note" id="MyNote${id}">
   <div class="dashbord__notes__note__titles">
         <h2 class="dashbord__notes__note__titles__name">${title}</h2>
         <h4 class="dashbord__notes__note__titles__date">${date}</h4>
@@ -90,7 +97,7 @@ function renderNote(title = 'First Note', date = 'Dec 2020', content){
 <img class="dashbord__notes__note__image">
 
 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-    <path fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/>
+    <path class="bi bi-trash-fill" fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/>
   </svg>
 
   <svg width="2.5em" height="2.5em" viewBox="0 0 16 16" class="bi bi-pencil-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -128,7 +135,7 @@ function restoreTextEditor(){
 
 //view the content of the note
 function viewNote(e){
-    let title = '', content = '', date = null
+    let title = '', body = '', date = null
     const note = Array.from(e.target.parentElement.children)
     note.forEach(el => {
         if (el.classList.contains('dashbord__notes__note__titles')){
@@ -142,7 +149,7 @@ function viewNote(e){
             })
         }
         else if (el.classList.contains('content')){
-            content = el.textContent;
+            body = el.textContent;
         }
 
     })
@@ -152,22 +159,43 @@ function viewNote(e){
             items.viewNote.classList.add('--showNoteContent')
         }
     }
-    renderNoteCard(title, date, content)
+    renderNoteCard(title, date, body)
 }
 
-function renderNoteCard(title, date, content){
+function renderNoteCard(title, date, body){
     items.viewtitle.textContent = title
     items.viewDate.textContent = date
-    items.viewContent.textContent = content
+    items.viewContent.textContent = body
 }
 
 function closeNote(e){
     e.target.parentElement.parentElement.classList.remove('--showNoteContent')
 }
+
+//delete note
+
+function deleteNote(e){
+    let noteKey =  e.target.parentElement.parentElement
+    if (e.target.classList.contains('trash') || (e.target.tagName === 'svg' || e.target.tagName === 'path')){
+        e.target.parentElement.parentElement.remove()
+    }
+    console.log(noteKey.id)
+    deleteFromLocalStorage(noteKey)
+}
+
+function deleteFromLocalStorage(note){
+    localStorage.removeItem(note.id)
+}
 //Event Listeners
 //When load
 window.addEventListener('load', () => {
     tempHideTabs(items.dashboard, items.textEditor)
+    const localNotes = Object.values(localStorage)
+    let body, title, date, id;
+    localNotes.forEach(note => {
+        [body, title, date, id] = note.split(',')
+        renderNote(title, date, body, id)
+    })
 
 })
 //slide front page on click
@@ -245,6 +273,10 @@ items.saveNoteBtn.addEventListener('click', () => {
 
 //show note
 items.notesList.addEventListener('click', viewNote)
+
+//delet note
+items.notesList.addEventListener('click', deleteNote)
+
 
 //close note
 items.closeNoteBtn.addEventListener('click', (e) =>{
