@@ -70,6 +70,24 @@ $logo-color: rgb(255, 217, 0);
     }
     &__search{
         margin-top: 1rem;
+        &__bar{
+            display: flex;
+            & button{
+                background-color: transparent;
+                border: none;
+                position: relative;
+                right: 3.5rem;
+                outline: none;
+                & i{
+                    color: white;
+                }
+            }
+            & button:hover{
+                & i{
+                    color: rgba(255, 255, 255, 0.678);
+                }
+            }
+        }
         & input{
             width: 30rem;
             height: 3rem;
@@ -147,11 +165,12 @@ $logo-color: rgb(255, 217, 0);
                 }
                 &__date{
                     color: rgba(255, 255, 255, 0.794);
+                    font-size: 95%;
 
                 }
                 
             }
-            & .content{
+            & p{
                 display: none;
             }
         }
@@ -214,11 +233,48 @@ $logo-color: rgb(255, 217, 0);
         display: none;
         transition: all 2s ease;
     }
+    &__pagination{
+        display: flex;
+        align-items: center;
+        background-color: $logo-color;
+        overflow: hidden;
+        height: 2.5rem;
+        position: fixed;
+        top: calc(100vh - 3.5rem);
+        &__page{
+            color: white;
+            margin-left: 2rem;
+            margin-right: 2rem;
+        }
+        & .chev{
+            color: black;
+            background-color: rgba(255, 255, 255, 0.671);
+            height: inherit;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        & .chev:hover{
+            color: rgba(255, 255, 255, 0.671);
+            background-color: black;
+
+        }
+        & .fa-chevron-left{
+            padding-right: .5rem;
+            padding-left: .5rem;
+        }
+        & .fa-chevron-right{
+            padding-left: .5rem;
+            padding-right: .5rem;
+        }
+    }
     transition: 1s transform ease-in-out;
 }
 .textEditor{
     min-height: 100vh;
-    width: 100%;
+    max-width: 100%;
     background-color: white;
     display: flex;
     flex-direction: column;

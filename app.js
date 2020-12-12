@@ -18,11 +18,21 @@ const items = {
     viewtitle: document.querySelector('.heads h2'),
     viewDate: document.querySelector('.heads h4'),
     viewContent: document.querySelector('.dashbord__view p'), 
-    closeNoteBtn: document.querySelector('.dashbord__view button')
+    closeNoteBtn: document.querySelector('.dashbord__view button'),
+    searchBar: document.querySelector('.dashbord__search__bar #search'),
+    searchBtn: document.querySelector('.dashbord__search__bar button'),
+    controlPagination: document.querySelector('.dashbord__pagination'),
+    leftPage: document.querySelector('.dashbord__pagination div.left'),
+    rightPage: document.querySelector('.dashbord__pagination div.right'),
+    pageUI: document.querySelector('.dashbord__pagination h3')
+
 }
 
 //vars
-const notes = []
+const notes = [];
+let noteTitlesArr = [];
+const pageArrows = [items.leftPage, items.rightPage];
+let currentPage = 1;
 
 //storing the individual note
 class Note {
@@ -35,7 +45,7 @@ class Note {
 }
 
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mai', 'Juin', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-
+const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 //functions
 
 function tempHideTabs(dash, text){
@@ -58,18 +68,6 @@ function hideFront(front){
 function showDashboard(dash){
     dash.classList.add('--active')
 }
-//text editor tools
-// function format(command, value) {
-//     document.execCommand(command, false, value);
-// }
-function format(command, value) {
-    document.execCommand(command, false, value)
-}
-function choseColor(){
-    if (blue){
-    }
-}
-
 
 //create notes
 
@@ -78,18 +76,21 @@ function createNote(){
     let id = '';
     id = rand
     const now = new Date()
-    const date = months[now.getMonth()] + '/' + now.getFullYear();
-    const newNote = new Note(items.noteTitle.value, items.textarea.innerHTML, date, id)
-
+    const date = days[now.getDay()] + '/' + months[now.getMonth()] + '/' + now.getFullYear();
+    const newNote = new Note(items.noteTitle.value, items.textarea.innerText, date, id)
+    
     notes.push(newNote)
-    localStorage.setItem(`MyNote${rand}`, Object.values(newNote))
+
+    //store the note in localStrage so we can render it on page load
+    localStorage.setItem(`MyNote${rand}`, JSON.stringify(newNote))
+    console.log(newNote.content)
     renderNote(newNote.title, date, newNote.content, id)
 }
 
 function renderNote(title = 'First Note', date = 'Dec 2020', content, id){
     //set markup
     const markup = `
-<li class="dashbord__notes__note" id="MyNote${id}">
+<li class="dashbord__notes__note" id="MyNote${id}" title="${title}">
   <div class="dashbord__notes__note__titles">
         <h2 class="dashbord__notes__note__titles__name">${title}</h2>
         <h4 class="dashbord__notes__note__titles__date">${date}</h4>
@@ -118,11 +119,13 @@ function renderNote(title = 'First Note', date = 'Dec 2020', content, id){
         items.noteListState.classList.add('--inactive')
     }
 
-    else if(Array.from(items.notesList.children).length <= 1){
+    else if(Array.from(items.notesList.children).length === 0){
         items.noteListState.classList.remove('--inactive')
     }
 
 }
+
+
 function hideLoader(loader){
    loader.classList.remove('--showLoder')
 
@@ -179,25 +182,94 @@ function deleteNote(e){
     if (e.target.classList.contains('trash') || (e.target.tagName === 'svg' || e.target.tagName === 'path')){
         e.target.parentElement.parentElement.remove()
     }
-    console.log(noteKey.id)
+    console.log(noteKey)
     deleteFromLocalStorage(noteKey)
 }
 
 function deleteFromLocalStorage(note){
     localStorage.removeItem(note.id)
 }
+
+//Search feature
+
+function searchNotes(searchVal, notesList){
+    //check if the note title match the value given in the search input
+    //get all the note in one array
+    noteTitlesArr  = Array.from(notesList.children)
+    noteTitlesArr = noteTitlesArr.slice(1)
+    searchVal = searchVal.toUpperCase()
+
+    //check if a note title match the given search input
+    noteTitlesArr.forEach(note => {
+        
+        if (note.title.toUpperCase().indexOf(searchVal) > -1){
+            note.style.display = ''
+        }
+        else{    
+            note.style.display = 'none'
+        }
+    })
+
+}
+
+//pagination
+
+function changePage(e, page = 1, notePerPage = 4){
+   //check for the number of existing notes
+   noteTitlesArr  = Array.from(items.notesList.children)
+   noteTitlesArr = noteTitlesArr.slice(1)
+
+   let numberOfPages = noteTitlesArr.length/4
+
+   const start = (page - 1)* notePerPage
+   const end = page * notePerPage
+
+   noteTitlesArr.slice(start, end)
+
+   if (this.classList.contains('left')){
+       while(currentPage > 1){
+        currentPage--
+       }
+   }
+   else if (this.classList.contains('right')){
+       currentPage++
+   }
+   items.pageUI.textContent = currentPage
+
+    console.log(this)
+
+}
+
+// function pagination(){
+//     //
+//     noteTitlesArr  = Array.from(notesList.children)
+//     noteTitlesArr = noteTitlesArr.slice(1)
+
+
+
+// }
+
 //Event Listeners
 //When load
 window.addEventListener('load', () => {
     tempHideTabs(items.dashboard, items.textEditor)
-    const localNotes = Object.values(localStorage)
-    let body, title, date, id;
-    localNotes.forEach(note => {
-        [body, title, date, id] = note.split(',')
-        renderNote(title, date, body, id)
-    })
 
+    //an object that have all the content of our note to be rendered on page load
+    let len = Object.values(localStorage).length
+    const notes = []
+
+    for (let i = 0; i < len; i++){
+        let localNotes = JSON.parse(Object.values(localStorage)[i])
+        notes.push(localNotes)
+    }
+
+    notes.forEach(note => {
+
+        renderNote(note.title, note.date, note.content, note.id)
+    })
+    
 })
+
 //slide front page on click
 items.enterBtn.addEventListener('click', () => {
     slideToLeft(items.front)
@@ -283,3 +355,16 @@ items.closeNoteBtn.addEventListener('click', (e) =>{
     setTimeout(closeNote, 1500, e)
 })
 
+//search for a particular note
+items.searchBtn.addEventListener('click', () => {
+    searchNotes(items.searchBar.value, items.notesList)
+
+})
+
+items.searchBar.addEventListener('input', (e) => {
+    searchNotes(items.searchBar.value, items.notesList)
+    
+})
+
+//pagination
+pageArrows.forEach(arrow => arrow.addEventListener('click', changePage))
