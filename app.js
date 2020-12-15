@@ -24,15 +24,18 @@ const items = {
     controlPagination: document.querySelector('.dashbord__pagination'),
     leftPage: document.querySelector('.dashbord__pagination div.left'),
     rightPage: document.querySelector('.dashbord__pagination div.right'),
-    pageUI: document.querySelector('.dashbord__pagination h3')
+    pageUI: document.querySelector('.dashbord__pagination h3'),
+    paginationControl: document.querySelector('.dashbord__pagination'),
+    noContentError: document.querySelector('.textEditor__error')
 
 }
 
 //vars
-const notes = [];
+const notes = Object.values(localStorage).map(el => JSON.parse(el)) || [];
 let noteTitlesArr = [];
 const pageArrows = [items.leftPage, items.rightPage];
-let currentPage = 1;
+let page = 1;
+let notePerPage = 4
 
 //storing the individual note
 class Note {
@@ -46,6 +49,7 @@ class Note {
 
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mai', 'Juin', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+
 //functions
 
 function tempHideTabs(dash, text){
@@ -83,8 +87,12 @@ function createNote(){
 
     //store the note in localStrage so we can render it on page load
     localStorage.setItem(`MyNote${rand}`, JSON.stringify(newNote))
-    console.log(newNote.content)
-    renderNote(newNote.title, date, newNote.content, id)
+    
+    renderNote(shortenTitle(newNote.title), date, newNote.content, id)
+    Array.from(items.notesList.children).slice(5).forEach(note => {
+        note.style.display = 'none'
+    })
+    
 }
 
 function renderNote(title = 'First Note', date = 'Dec 2020', content, id){
@@ -123,8 +131,16 @@ function renderNote(title = 'First Note', date = 'Dec 2020', content, id){
         items.noteListState.classList.remove('--inactive')
     }
 
+
 }
 
+function shortenTitle(title){
+    if (title.length > 17){
+
+        title = title.slice(0, 16) + '...'
+    }
+   return title
+}
 
 function hideLoader(loader){
    loader.classList.remove('--showLoder')
@@ -165,6 +181,13 @@ function viewNote(e){
     renderNoteCard(title, date, body)
 }
 
+function closeErrMsg(e){
+
+    if (e.target.tagName === 'STRONG'){
+        e.target.parentElement.classList.remove('--showError')
+    }
+}
+
 function renderNoteCard(title, date, body){
     items.viewtitle.textContent = title
     items.viewDate.textContent = date
@@ -182,7 +205,7 @@ function deleteNote(e){
     if (e.target.classList.contains('trash') || (e.target.tagName === 'svg' || e.target.tagName === 'path')){
         e.target.parentElement.parentElement.remove()
     }
-    console.log(noteKey)
+    
     deleteFromLocalStorage(noteKey)
 }
 
@@ -209,45 +232,55 @@ function searchNotes(searchVal, notesList){
             note.style.display = 'none'
         }
     })
+    
 
 }
 
 //pagination
 
-function changePage(e, page = 1, notePerPage = 4){
-   //check for the number of existing notes
-   noteTitlesArr  = Array.from(items.notesList.children)
-   noteTitlesArr = noteTitlesArr.slice(1)
+function changePage(){
 
-   let numberOfPages = noteTitlesArr.length/4
+    items.notesList.innerHTML = ''
 
-   const start = (page - 1)* notePerPage
-   const end = page * notePerPage
+    const start = (page - 1)* notePerPage
+    const end = page * notePerPage
+    
+    let paginatedNotes = notes.slice(start, end);
 
-   noteTitlesArr.slice(start, end)
+    if (this.classList.contains('left')){
+        if (page > 1){
+            page--
+        }
+        console.log(this)
+    }
+    if (paginatedNotes.length >= 4){
+      
+        if (this.classList.contains('right') && paginatedNotes.length > 0){
+            page++
+        }
+    }
+    items.pageUI.textContent = page
 
-   if (this.classList.contains('left')){
-       while(currentPage > 1){
-        currentPage--
-       }
-   }
-   else if (this.classList.contains('right')){
-       currentPage++
-   }
-   items.pageUI.textContent = currentPage
+    paginatedNotes.forEach(note => {
+        renderNote(shortenTitle(note.title), note.date, note.content, note.id)
 
-    console.log(this)
+    })
+    console.log(start, end)
+    console.log(page)
+    
+    console.log(paginatedNotes)
 
 }
 
-// function pagination(){
-//     //
-//     noteTitlesArr  = Array.from(notesList.children)
-//     noteTitlesArr = noteTitlesArr.slice(1)
+// function editNote(){
 
+// }
+
+// function saveAndEdit(){
 
 
 // }
+
 
 //Event Listeners
 //When load
@@ -261,13 +294,14 @@ window.addEventListener('load', () => {
     for (let i = 0; i < len; i++){
         let localNotes = JSON.parse(Object.values(localStorage)[i])
         notes.push(localNotes)
+        noteTitlesArr.push(localNotes)
     }
 
-    notes.forEach(note => {
+    notes.slice(0, 4).forEach(note => {
 
-        renderNote(note.title, note.date, note.content, note.id)
+        renderNote(shortenTitle(note.title), note.date, note.content, note.id)
     })
-    
+ 
 })
 
 //slide front page on click
@@ -352,7 +386,7 @@ items.notesList.addEventListener('click', deleteNote)
 
 //close note
 items.closeNoteBtn.addEventListener('click', (e) =>{
-    setTimeout(closeNote, 1500, e)
+    setTimeout(closeNote, 500, e)
 })
 
 //search for a particular note
@@ -368,3 +402,6 @@ items.searchBar.addEventListener('input', (e) => {
 
 //pagination
 pageArrows.forEach(arrow => arrow.addEventListener('click', changePage))
+
+// no content message
+items.noContentError.addEventListener('click', closeErrMsg)

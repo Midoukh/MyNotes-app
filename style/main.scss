@@ -60,3 +60,10 @@ body{
 .--showNoteContent{
     display: block;
 }
+.pagination-button{
+    opacity: .3;
+    cursor: not-allowed;
+}
+.unclickable{
+    pointer-events: none;
+}

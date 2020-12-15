@@ -57,7 +57,9 @@ $logo-color: rgb(255, 217, 0);
     bottom: .5rem;
     margin-left: .5rem;
 }
-.dashbord{    
+.dashbord{
+    padding-top: 1rem;
+    padding-left: 1rem;
     background-color: rgb(1, 3, 1);
     display: flex;
     flex-direction: column;
@@ -70,8 +72,26 @@ $logo-color: rgb(255, 217, 0);
     }
     &__search{
         margin-top: 1rem;
+        &__bar{
+            display: flex;
+            & button{
+                background-color: transparent;
+                border: none;
+                position: relative;
+                right: 3.5rem;
+                outline: none;
+                & i{
+                    color: white;
+                }
+            }
+            & button:hover{
+                & i{
+                    color: rgba(255, 255, 255, 0.678);
+                }
+            }
+        }
         & input{
-            width: 20rem;
+            max-width: 80%;
             height: 3rem;
             background-color: rgba(255, 217, 0, .4);
             border: none; 
@@ -90,43 +110,189 @@ $logo-color: rgb(255, 217, 0);
         margin-top: 1rem;
         color: white;
         opacity: 1;
-
     }
-    & svg{
+    & .bi-plus-circle-fill{
         position: fixed;
         top: 20rem;
         fill: $logo-color;
         cursor: pointer;
     }
-    & svg:hover{
+    & .bi-plus-circle-fill:hover{
         opacity: .8;
     }
     &__notes{
         &__state{
             margin-top: 3rem;
-
         }
     }
-    
+    &__notes{
+        border-top: .5px solid rgba(255, 255, 255, 0.335);
+        width: inherit;
+        margin-top: 1rem;
+        opacity: 1;
+        &__note{
+            opacity: 1;
+            width: 80%;
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            & .bi-trash-fill{
+                fill: #ee5253;
+                margin-left: 5rem;
+                visibility: hidden;
+                transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+            }
+            & .bi-pencil-fill, & .fa-eye{
+                fill: #5f27cd;
+                height: 1.4rem;
+                margin-left: 1rem;
+                visibility: hidden;
+                transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+
+            }
+            & .fa-eye{
+                color: #ff9f43;
+            }
+            & .fa-eye:hover{
+                color: white;
+            }
+            & .bi-pencil-fill:hover, & .bi-trash-fill:hover{
+                fill: white;
+            }
+            &__titles{
+                &__name{
+                    color: white;
+                }
+                &__date{
+                    color: rgba(255, 255, 255, 0.794);
+                    font-size: 95%;
+
+                }
+                
+            }
+            & p{
+                display: none;
+            }
+        }
+        &__note:hover{
+                & .bi-trash-fill, & .bi-pencil-fill, & .fa-eye{
+                    margin-left: 1.5rem;
+                    visibility: visible;
+                }
+        }
+    }
+    &__view{
+        margin: 0;
+        position: absolute;
+        width: inherit;
+        min-height: inherit;
+        background-color: rgba(255, 255, 255, 0.438);
+        z-index: 200;
+        backdrop-filter: blur(4px);
+
+        &__infos{
+            max-width: inherit;
+            max-height: 70%;
+            display: flex;
+            flex-direction: column;
+            & .heads, & p{
+                padding: 1rem 2rem 1rem 1rem;
+            }
+            & .heads{
+                background-color: rgba(255, 255, 255, 0.404);
+                & .date{
+                    color: white;
+                    opacity: .6;
+                }
+            }
+            & p{
+                max-width: 100%;
+                margin-top: 1rem;
+                background-color: rgba(255, 255, 255, .2);
+                word-break: break-all;
+                overflow-y: scroll;
+                line-height: 2em;
+                font-weight: 700;
+            }
+            & .close{
+                position: absolute;
+                border: none;
+                padding: 1rem 1.5rem;
+                background-color: white;
+                color: rgba(0, 0, 0, 0.698);
+                right: 2rem;
+                top: 2rem;
+                border-radius: 2rem;
+                font-weight: 500;
+            }
+            & .close:hover{
+                background-color:rgba(0, 0, 0, 0.698);
+                color: white;
+            }
+        }
+        display: none;
+        transition: all 2s ease;
+    }
+    &__pagination{
+        display: flex;
+        align-items: center;
+        background-color: $logo-color;
+        overflow: hidden;
+        height: 2.5rem;
+        position: fixed;
+        top: calc(100vh - 3.5rem);
+        &__page{
+            color: white;
+            margin-left: 2rem;
+            margin-right: 2rem;
+        }
+        & .chev{
+            color: black;
+            background-color: rgba(255, 255, 255, 0.671);
+            height: inherit;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        & .chev:hover{
+            color: rgba(255, 255, 255, 0.671);
+            background-color: black;
+
+        }
+        & .fa-chevron-left{
+            padding-right: .5rem;
+            padding-left: .5rem;
+        }
+        & .fa-chevron-right{
+            padding-left: .5rem;
+            padding-right: .5rem;
+        }
+    }
+    transition: 1s transform ease-in-out;
 }
 .textEditor{
     min-height: 100vh;
-    width: 100%;
+    max-width: 100%;
     background-color: white;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     padding-top: 1rem;
-    padding-left: .5rem;
-    & textarea{
-        max-width: 90%;
+    padding-left: 3rem;
+    &__textarea{
         overflow: scroll;
+        width: 78%;
+        height: 75vh;
         padding: .5rem .5rem .5rem .5rem;
         border: 1px solid rgba(0, 0, 0, 0.246);
         outline-color: $logo-color;
         resize: none;
     }
-    & textarea::placeholder{
+    &__textarea::placeholder{
         opacity: .4;
        
     }
@@ -148,7 +314,7 @@ $logo-color: rgb(255, 217, 0);
     &__tools{
         margin-bottom: 1rem;
         display: flex;
-        & button{
+        &__bold, &__italic, &__underline{
             background-color: transparent;
             border: none;
             margin-right: 2rem;
@@ -156,10 +322,12 @@ $logo-color: rgb(255, 217, 0);
         }
         &__color__one, &__color__two, &__color__three{
             border-radius: 50%;
-            height: 1.7rem;
-            width: 1.7rem;
+            height: 2rem;
+            width: 1.5rem;
             margin-left: 2rem;
             cursor: pointer;
+            border: none;
+            outline: none;
         }
        
         &__color__one{
@@ -184,12 +352,74 @@ $logo-color: rgb(255, 217, 0);
         font-weight: 700;
         position: absolute;
         right: 14.5rem;
-        top: 118rem;
+        top: 3rem;
     }
     &__save:hover{
         background-color: transparent;
         color: black;
         border: .5px solid $logo-color;
+    }
+    &__loader{
+            visibility: hidden;
+            display: inline-block;
+            position: relative;
+            bottom: 32.5rem;
+            left: 53.5rem;
+            width: 80px;
+            height: 80px;
+            position: absolute;
+          & div {
+            position: absolute;
+            border: 4px solid coral;
+            opacity: 1;
+            border-radius: 50%;
+            animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+          }
+          & div:nth-child(2) {
+            animation-delay: -0.5s;
+          }
+          @keyframes lds-ripple {
+            0% {
+              top: 36px;
+              left: 36px;
+              width: 0;
+              height: 0;
+              opacity: 1;
+            }
+            100% {
+              top: 0px;
+              left: 0px;
+              width: 72px;
+              height: 72px;
+              opacity: 0;
+            }
+          }
+    }
+    &__error{
+        visibility: hidden;
+        color: white;
+        background-color: #ff3333;
+        max-width: 100%;
+        height: 3rem;
+        padding: 2px 3px 2px 3px;
+        border-radius: 8px;
+        position: relative;
+        bottom: 25rem;
+        left: 25rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+        & strong{
+            margin-left: 2rem;
+            color: black;
+            cursor: pointer;
+        }
+        & strong:hover{
+            color: rgba(0, 0, 0, 0.356);
+        }
     }   
+    transition: 1s transform ease-in-out;
   }
 }
