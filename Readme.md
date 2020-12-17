@@ -7,4 +7,4 @@
 4 -- localstorage
 5 -- cool text editor
 
-![assets/screenShots](myNote.jpg)
+![./assets/screenShots](myNote.jpg)
