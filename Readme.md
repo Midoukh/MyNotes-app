@@ -8,3 +8,4 @@
 5 -- cool text editor
 
 ![./assets/screenShots](myNote.jpg)
+![ScreenShot](/assets/screenShots/myNote.jpg?raw=true "Title")
