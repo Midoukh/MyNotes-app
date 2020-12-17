@@ -26,7 +26,8 @@ const items = {
     rightPage: document.querySelector('.dashbord__pagination div.right'),
     pageUI: document.querySelector('.dashbord__pagination h3'),
     paginationControl: document.querySelector('.dashbord__pagination'),
-    noContentError: document.querySelector('.textEditor__error')
+    noContentError: document.querySelector('.textEditor__error'),
+    confirmDelete: document.querySelector('.dashbord__confirm')
 
 }
 
@@ -35,7 +36,9 @@ const notes = Object.values(localStorage).map(el => JSON.parse(el)) || [];
 let noteTitlesArr = [];
 const pageArrows = [items.leftPage, items.rightPage];
 let page = 1;
-let notePerPage = 4
+let notePerPage = 4;
+let creationMode = true;
+let newEditedNote = [];
 
 //storing the individual note
 class Note {
@@ -110,7 +113,7 @@ function renderNote(title = 'First Note', date = 'Dec 2020', content, id){
   </svg>
 
   <svg width="2.5em" height="2.5em" viewBox="0 0 16 16" class="bi bi-pencil-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-    <path fill-rule="evenodd" d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
+    <path fill-rule="evenodd" class="bi bi-pencil-fill" d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
   </svg>
 
   <i class="fas fa-eye"></i>
@@ -201,12 +204,59 @@ function closeNote(e){
 //delete note
 
 function deleteNote(e){
-    let noteKey =  e.target.parentElement.parentElement
-    if (e.target.classList.contains('trash') || (e.target.tagName === 'svg' || e.target.tagName === 'path')){
-        e.target.parentElement.parentElement.remove()
-    }
+
+    //confirm from the user first
     
-    deleteFromLocalStorage(noteKey)
+    let noteKey =  e.target.parentElement.parentElement
+        if (e.target.classList.contains('trash') || (e.target.tagName === 'svg' || e.target.tagName === 'path')){
+            
+            e.target.parentElement.parentElement.remove()
+        }
+    
+        deleteFromLocalStorage(noteKey)
+   
+}
+
+function confirmDelete(e){
+   
+    let childs = Array.from(items.dashboard.children)
+    if (e.target.classList.contains('bi-trash-fill')){
+
+        items.confirmDelete.classList.add('confirm-delete')
+        childs.forEach(item => {
+            if (!item.classList.contains('dashbord__confirm')){
+                item.classList.add('unclickable')
+            }
+    
+        })   
+        let confirmBtns = document.querySelectorAll('.dashbord__confirm__buttons button')
+    
+        confirmBtns.forEach(btn => btn.addEventListener('click', () => {
+            if (btn.id === 'yes'){
+                items.confirmDelete.classList.remove('confirm-delete')
+    
+                childs.forEach(item => {
+                    if (!item.classList.contains('dashbord__confirm')){
+                        item.classList.remove('unclickable')
+                    }
+            
+                }) 
+                deleteNote(e)
+            }
+            else if(btn.id === 'no'){
+                items.confirmDelete.classList.remove('confirm-delete')
+                childs.forEach(item => {
+                    if (!item.classList.contains('dashbord__confirm')){
+                        item.classList.remove('unclickable')
+                    }
+            
+                }) 
+            }
+        }))
+    }
+
+    
+   
 }
 
 function deleteFromLocalStorage(note){
@@ -272,14 +322,87 @@ function changePage(){
 
 }
 
-// function editNote(){
+function editNote(e){
+    //when I click the edit button the app will take me to the text editor
+    //although this time the text editor input will be filled with the title and content
+    //of the note that I chosen to edit
+    // const regEx = /[a-z]/gi
+    let note =  e.target.parentElement.parentElement
 
-// }
+    let title = Array.from(note.children)[0].children[0].textContent
+    let content = Array.from(note.children)[5].textContent
 
-// function saveAndEdit(){
+    let newTitle = Array.from(note.children)[0].children[0]
+    let newContent = Array.from(note.children)[5]
+    console.log(newTitle)
 
+    if (e.target.classList.contains('bi-pencil-fill')){
+        console.log('move to text edito')
+        creationMode = false
+        //hide dashboard and show text editor
 
-// }
+        items.dashboard.classList.add('--slideLeft')
+        
+        setTimeout(() => {
+        items.dashboard.classList.remove('--active')
+        items.dashboard.classList.add('--inactive')
+        items.textEditor.classList.add('--active')
+        items.textEditor.classList.remove('--inactive')
+        items.textEditor.classList.remove('--slideRigth')
+
+        }, 1000)
+
+    }
+    fillTextEditor(items.noteTitle, items.textarea, title, content)
+
+    newEditedNote.push(newTitle, newContent, note.id)
+
+}
+
+function fillTextEditor(editorTitle, editorContent, title, content){
+    editorTitle.value = title
+    editorContent.textContent = content
+    
+}
+
+function editAndSave(title, content, editTitle, editContent){
+    
+    let notes = Object.values(localStorage)
+
+    //when I click save I dont create another note the app will save the last one
+    //that it will change its title and its content
+    title.textContent = editTitle.value
+    content.textContent = editContent.textContent
+
+    //it need also to be edited on the local storage
+    //another issue is I cant create another note after editing one 
+
+    //edit on localstroge
+    notes.map(element => {
+        element = JSON.parse(element)
+        console.log(element.id, newEditedNote[2].replace(/[a-z]/gi, ''))
+        if (element.id.toString() === newEditedNote[2].replace(/[a-z]/gi, '')){
+            element.title = editTitle.value
+            element.content = editContent.textContent
+           
+        }
+        localStorage.setItem(`MyNote${element.id}`, JSON.stringify(element))
+    })
+
+}
+
+function exit(){
+    
+        
+    setTimeout(() => {
+    items.dashboard.classList.remove('--inactive')
+    items.dashboard.classList.add('--active')
+    items.textEditor.classList.remove('--active')
+    items.textEditor.classList.add('--inactive')
+    // items.textEditor.classList.remove('--slideRigth')
+
+    }, 1000)
+}
 
 
 //Event Listeners
@@ -357,11 +480,25 @@ items.textEditorTools.forEach(tool => {
     })
     
 })
+
+//save a new note
 items.saveNoteBtn.addEventListener('click', () => {
+
     if (items.noteTitle.value && items.textarea.textContent){
         //create and save a new note
-    createNote()
-
+        if (creationMode){
+            
+            createNote()
+            console.log(creationMode)
+        }
+        else if(!creationMode){
+            exit()
+            editAndSave(newEditedNote[0], newEditedNote[1],
+            items.noteTitle, items.textarea);
+            
+            creationMode = true;            
+        }
+      
     //hide text editor and show dashboard
    setTimeout(slideToRight, 1000, items.textEditor)
     items.loader.classList.add('--showLoder')
@@ -377,12 +514,14 @@ items.saveNoteBtn.addEventListener('click', () => {
     }
 })
 
+//edit and save an old note
+
+
 //show note
 items.notesList.addEventListener('click', viewNote)
 
 //delet note
-items.notesList.addEventListener('click', deleteNote)
-
+items.notesList.addEventListener('click', confirmDelete)
 
 //close note
 items.closeNoteBtn.addEventListener('click', (e) =>{
@@ -405,3 +544,7 @@ pageArrows.forEach(arrow => arrow.addEventListener('click', changePage))
 
 // no content message
 items.noContentError.addEventListener('click', closeErrMsg)
+
+//edit nots
+
+items.notesList.addEventListener('click', editNote)

@@ -270,6 +270,42 @@ $logo-color: rgb(255, 217, 0);
             padding-right: .5rem;
         }
     }
+    &__confirm{
+        max-width: 25%;
+        max-height: 20%;
+        background-color: white;
+        border-radius: 5px;
+        padding: 1.5rem 1.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: absolute;
+        transform: translateY(200%);
+        display: none;
+        &__buttons{
+            display: flex;
+            justify-content: space-between;
+            & #yes, & #no{
+                padding: .5rem 1rem;
+                border: none;
+                outline: none;
+                font-weight: 700;
+                border-radius: 5px;
+            }
+            & #yes{
+                background-color: rgba(15, 160, 128, 0.911);
+            }
+            & #yes:hover{
+                background-color: rgba(59, 182, 155, 0.5);
+            }
+            & #no{
+                background-color: #ff3333e5;
+            }
+            & #no:hover{
+                background-color: #ff333363;
+            }
+        }
+    }
     transition: 1s transform ease-in-out;
 }
 .textEditor{

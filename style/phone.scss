@@ -132,7 +132,7 @@ $logo-color: rgb(255, 217, 0);
         opacity: 1;
         &__note{
             opacity: 1;
-            width: 80%;
+            max-width: 100%;
             margin-top: 1rem;
             display: flex;
             align-items: center;
@@ -240,9 +240,9 @@ $logo-color: rgb(255, 217, 0);
         align-items: center;
         background-color: $logo-color;
         overflow: hidden;
-        height: 2.5rem;
+        height: 2rem;
         position: fixed;
-        top: calc(100vh - 3.5rem);
+        top: calc(100vh - 4rem);
         &__page{
             color: white;
             margin-left: 2rem;
@@ -272,6 +272,42 @@ $logo-color: rgb(255, 217, 0);
             padding-right: .5rem;
         }
     }
+    &__confirm{
+        max-width: 50%;
+        max-height: 20%;
+        background-color: white;
+        border-radius: 5px;
+        padding: 1.5rem 1.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: absolute;
+        transform: translateY(200%);
+        display: none;
+        &__buttons{
+            display: flex;
+            justify-content: space-between;
+            & #yes, & #no{
+                padding: .5rem 1rem;
+                border: none;
+                outline: none;
+                font-weight: 700;
+                border-radius: 5px;
+            }
+            & #yes{
+                background-color: rgba(15, 160, 128, 0.911);
+            }
+            & #yes:hover{
+                background-color: rgba(59, 182, 155, 0.5);
+            }
+            & #no{
+                background-color: #ff3333e5;
+            }
+            & #no:hover{
+                background-color: #ff333363;
+            }
+        }
+    }
     transition: 1s transform ease-in-out;
 }
 .textEditor{
@@ -280,12 +316,12 @@ $logo-color: rgb(255, 217, 0);
     background-color: white;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     padding-top: 1rem;
-    padding-left: 3rem;
+    padding-left: 1rem;
     &__textarea{
         overflow: scroll;
-        width: 78%;
+        width: 90%;
         height: 75vh;
         padding: .5rem .5rem .5rem .5rem;
         border: 1px solid rgba(0, 0, 0, 0.246);
@@ -322,9 +358,9 @@ $logo-color: rgb(255, 217, 0);
         }
         &__color__one, &__color__two, &__color__three{
             border-radius: 50%;
-            height: 2rem;
-            width: 1.5rem;
-            margin-left: 2rem;
+            height: 1.4rem;
+            width: 1rem;
+            margin-left: 1.5rem;
             cursor: pointer;
             border: none;
             outline: none;
@@ -341,8 +377,9 @@ $logo-color: rgb(255, 217, 0);
         }  
     }
     &__save{
+        z-index: 100;
         margin-left: 10rem;
-        padding: .5rem 2.5rem .5rem 2.5rem;
+        padding: .3rem 1.5rem .3rem 1.5rem;
         background-color: $logo-color;
         color: white;
         border: none;
@@ -351,8 +388,8 @@ $logo-color: rgb(255, 217, 0);
         border-radius: 2rem;
         font-weight: 700;
         position: absolute;
-        right: 14.5rem;
-        top: 3rem;
+        right: 16rem;
+        top: 38.4rem;
     }
     &__save:hover{
         background-color: transparent;

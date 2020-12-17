@@ -318,6 +318,54 @@
     padding-left: .5rem;
     padding-right: .5rem;
   }
+  .dashbord__confirm {
+    max-width: 25%;
+    max-height: 20%;
+    background-color: white;
+    border-radius: 5px;
+    padding: 1.5rem 1.5rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    position: absolute;
+    -webkit-transform: translateY(200%);
+            transform: translateY(200%);
+    display: none;
+  }
+  .dashbord__confirm__buttons {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+  }
+  .dashbord__confirm__buttons #yes, .dashbord__confirm__buttons #no {
+    padding: .5rem 1rem;
+    border: none;
+    outline: none;
+    font-weight: 700;
+    border-radius: 5px;
+  }
+  .dashbord__confirm__buttons #yes {
+    background-color: rgba(15, 160, 128, 0.911);
+  }
+  .dashbord__confirm__buttons #yes:hover {
+    background-color: rgba(59, 182, 155, 0.5);
+  }
+  .dashbord__confirm__buttons #no {
+    background-color: #ff3333e5;
+  }
+  .dashbord__confirm__buttons #no:hover {
+    background-color: #ff333363;
+  }
   .textEditor {
     min-height: 100vh;
     max-width: 100%;

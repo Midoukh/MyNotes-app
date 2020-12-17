@@ -318,6 +318,54 @@
     padding-left: .5rem;
     padding-right: .5rem;
   }
+  .dashbord__confirm {
+    max-width: 25%;
+    max-height: 20%;
+    background-color: white;
+    border-radius: 5px;
+    padding: 1.5rem 1.5rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    position: absolute;
+    -webkit-transform: translateY(200%);
+            transform: translateY(200%);
+    display: none;
+  }
+  .dashbord__confirm__buttons {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+  }
+  .dashbord__confirm__buttons #yes, .dashbord__confirm__buttons #no {
+    padding: .5rem 1rem;
+    border: none;
+    outline: none;
+    font-weight: 700;
+    border-radius: 5px;
+  }
+  .dashbord__confirm__buttons #yes {
+    background-color: rgba(15, 160, 128, 0.911);
+  }
+  .dashbord__confirm__buttons #yes:hover {
+    background-color: rgba(59, 182, 155, 0.5);
+  }
+  .dashbord__confirm__buttons #no {
+    background-color: #ff3333e5;
+  }
+  .dashbord__confirm__buttons #no:hover {
+    background-color: #ff333363;
+  }
   .textEditor {
     min-height: 100vh;
     max-width: 100%;
@@ -679,7 +727,7 @@
   }
   .dashbord__notes__note {
     opacity: 1;
-    width: 80%;
+    max-width: 100%;
     margin-top: 1rem;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -795,9 +843,9 @@
             align-items: center;
     background-color: #ffd900;
     overflow: hidden;
-    height: 2.5rem;
+    height: 2rem;
     position: fixed;
-    top: calc(100vh - 3.5rem);
+    top: calc(100vh - 4rem);
   }
   .dashbord__pagination__page {
     color: white;
@@ -833,6 +881,54 @@
     padding-left: .5rem;
     padding-right: .5rem;
   }
+  .dashbord__confirm {
+    max-width: 50%;
+    max-height: 20%;
+    background-color: white;
+    border-radius: 5px;
+    padding: 1.5rem 1.5rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    position: absolute;
+    -webkit-transform: translateY(200%);
+            transform: translateY(200%);
+    display: none;
+  }
+  .dashbord__confirm__buttons {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+  }
+  .dashbord__confirm__buttons #yes, .dashbord__confirm__buttons #no {
+    padding: .5rem 1rem;
+    border: none;
+    outline: none;
+    font-weight: 700;
+    border-radius: 5px;
+  }
+  .dashbord__confirm__buttons #yes {
+    background-color: rgba(15, 160, 128, 0.911);
+  }
+  .dashbord__confirm__buttons #yes:hover {
+    background-color: rgba(59, 182, 155, 0.5);
+  }
+  .dashbord__confirm__buttons #no {
+    background-color: #ff3333e5;
+  }
+  .dashbord__confirm__buttons #no:hover {
+    background-color: #ff333363;
+  }
   .textEditor {
     min-height: 100vh;
     max-width: 100%;
@@ -844,11 +940,11 @@
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
             flex-direction: column;
-    -webkit-box-align: start;
-        -ms-flex-align: start;
-            align-items: flex-start;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     padding-top: 1rem;
-    padding-left: 3rem;
+    padding-left: 1rem;
     -webkit-transition: 1s -webkit-transform ease-in-out;
     transition: 1s -webkit-transform ease-in-out;
     transition: 1s transform ease-in-out;
@@ -856,7 +952,7 @@
   }
   .textEditor__textarea {
     overflow: scroll;
-    width: 78%;
+    width: 90%;
     height: 75vh;
     padding: .5rem .5rem .5rem .5rem;
     border: 1px solid rgba(0, 0, 0, 0.246);
@@ -906,9 +1002,9 @@
   }
   .textEditor__tools__color__one, .textEditor__tools__color__two, .textEditor__tools__color__three {
     border-radius: 50%;
-    height: 2rem;
-    width: 1.5rem;
-    margin-left: 2rem;
+    height: 1.4rem;
+    width: 1rem;
+    margin-left: 1.5rem;
     cursor: pointer;
     border: none;
     outline: none;
@@ -923,8 +1019,9 @@
     background-color: #ff9f43;
   }
   .textEditor__save {
+    z-index: 100;
     margin-left: 10rem;
-    padding: .5rem 2.5rem .5rem 2.5rem;
+    padding: .3rem 1.5rem .3rem 1.5rem;
     background-color: #ffd900;
     color: white;
     border: none;
@@ -933,8 +1030,8 @@
     border-radius: 2rem;
     font-weight: 700;
     position: absolute;
-    right: 14.5rem;
-    top: 3rem;
+    right: 16rem;
+    top: 38.4rem;
   }
   .textEditor__save:hover {
     background-color: transparent;
@@ -1147,5 +1244,11 @@ body {
 
 .unclickable {
   pointer-events: none;
+}
+
+.confirm-delete {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 /*# sourceMappingURL=main.css.map */
