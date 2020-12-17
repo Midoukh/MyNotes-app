@@ -9,4 +9,4 @@
 
 ![./assets/screenShots](myNote.jpg)
 ![ScreenShot](master/assets/screenShots/myNote.jpg)
-<img src="master/assets/screenShots/myNote.jpg" alt="My cool logo"/>
+<img src="https://imgur.com/a/zWpU3op" alt="screenShot"/>
