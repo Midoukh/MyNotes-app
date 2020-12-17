@@ -9,4 +9,4 @@
 
 ![./assets/screenShots](myNote.jpg)
 ![ScreenShot](master/assets/screenShots/myNote.jpg)
-<img src="https://github.com/Midoukh/MyNotes-app.git" alt="screenShot"/>
+<img src="https://github.com/Midoukh/MyNotes-app/blob/master/assets/screenShots/myNote.JPG" alt="screenShot"/>
